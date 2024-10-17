@@ -5,7 +5,8 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-
+import { cloudStorage } from '@payloadcms/plugin-cloud-storage'
+import { gcsAdapter } from '@payloadcms/plugin-cloud-storage/gcs'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 
@@ -32,6 +33,18 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    // storage-adapter-placeholder
+    cloudStorage({
+      enabled: false,
+      collections: {
+        media: {
+          disablePayloadAccessControl: true,
+          adapter: gcsAdapter({
+            bucket: process.env.GCS_BUCKET || '',
+            options: null,
+            acl: 'Public',
+          }),
+        },
+      },
+    }),
   ],
 })
