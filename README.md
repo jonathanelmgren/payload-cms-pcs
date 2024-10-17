@@ -5,4 +5,4 @@ blank
 ## Attributes
 
 - **Database**: postgres
-- **Storage Adapter**: localDisk
+- **Storage Adapter**: gcsAdapter
